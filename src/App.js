@@ -1,24 +1,43 @@
-import logo from './logo.svg';
+import {useState} from "react";
 import './App.css';
+import ContentMinimized from "./ContentMinimized";
+import Content from "./Content";
+import Header2 from "./Header2";
+import Header3 from "./Header3";
+import Header from "./Header";
 
 function App() {
+  
+  const [minimize , setMinimize] = useState(false);
+  const [verticalMinimize, setVerticalMinimize] = useState(false);
+ 
+  const onClickHandler = () => {
+      setMinimize(!minimize);
+  }
+
+  const onClickVerticalHandler = () => {
+    setVerticalMinimize(!verticalMinimize);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <div className="App">
+    {
+      verticalMinimize ? (
+        <Header3 verticalHandler = {onClickVerticalHandler} />
+      ): minimize?(
+        <Header2 handler = {onClickHandler} verticalHandler= {onClickVerticalHandler} />
+      ): minimize && verticalMinimize ? (
+        <Header handler = {onClickHandler} verticalHandler = {onClickVerticalHandler}/>
+      ) : (
+        <Header handler = {onClickHandler} verticalHandler = {onClickVerticalHandler}/>
+      )
+    }
+     {
+    (!minimize && !verticalMinimize)? (
+      <Content /> 
+    ):
+    <ContentMinimized />
+    }
+      </div>
   );
 }
 
